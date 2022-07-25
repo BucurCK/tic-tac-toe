@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//MODIFICARE
 #define SIZE 3
 
 int main(){
@@ -8,6 +8,7 @@ int main(){
     int test = 1;
     int pos;
     char sym;
+    int testing;
 
 
     for(i = 0; i < SIZE; i++){
