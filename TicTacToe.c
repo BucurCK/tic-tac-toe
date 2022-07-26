@@ -64,9 +64,10 @@ int main(){
         to 'i' position in the char*/
 
         test = checkWin(pgame);
-        if( k == 9){
-            test = 1;
+        if( k == 9 && test == 1){
             printf("........TIE........\n");
+            printTicToc(pgame);
+            break;
          }         
        
         printTicToc(pgame);
