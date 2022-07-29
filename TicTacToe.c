@@ -4,6 +4,7 @@
  * // TODO: Add TIE state
  * * Maybe just make the choice of symbols (x/o) automatic
  * ! Add an AI(or something like that) so you can play solo - you sad FUCK
+ * //! REMOVE goto cause its Retarted
  * * Try to make some kind GUI for this(don't know how atm)
  * * Write the functions in different files(just to learn it -- for this kind of short code it's pretty useless)
  * // MAKE IT A VECTOR YOU STUPID FUCK -- actually just leave it :)
@@ -38,26 +39,31 @@ int main(){
 
     while(test == 1){
 
-        resetPosition:
         i = getNum("Input line(1-9): ", 'd') - 1;
-        if(i < 0 || i > 8){
-        printf("WRONG INPUT, please use numbers from 1 to 9\n");
-        goto resetPosition;
+        while(i < 0 || i > 8){
+            printf("WRONG INPUT, please use numbers from 1 to 9\n");
+            i = getNum("Input line(1-9): ", 'd') - 1;
         }
+
         i = checkRewrite(i, memory, &k);
-        if(i == -1){
-        printf("THE BOX IS ALREADY FILLED\n");
-        goto resetPosition;
+
+        while(i == -1){
+            printf("THE BOX IS ALREADY FILLED\n");
+            i = getNum("Input line(1-9): ", 'd') - 1;
+            while(i < 0 || i > 8){
+                printf("WRONG INPUT, please use numbers from 1 to 9\n");
+                i = getNum("Input line(1-9): ", 'd') - 1;
+            }
+            i = checkRewrite(i, memory, &k);
         }
         /*Gets the position(1-9) -- turns it in a array position (0-8)
         (if it isn't 0-8 it will scan it again -- goto -- )
         -- assigns it to the array position*/
        
-        resetSymbol:
         game[i] = getNum("Input symbol: ", 'c');
-        if(game[i] != 'x' && game[i] != 'o'){
+        while(game[i] != 'x' && game[i] != 'o'){
             printf("WRONG INPUT, please use x or o\n");
-            goto resetSymbol;
+            game[i] = getNum("Input symbol: ", 'c');
         }
         /*Gets the symbol then checks it to be either x or o;
         if not it will scan it again and than assign it
