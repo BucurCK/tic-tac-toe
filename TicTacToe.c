@@ -2,9 +2,10 @@
  * // TODO: Create functions cause this code is UGLY
  * // TODO: Make it impossible to rewrite symbols in the game
  * // TODO: Add TIE state
- * * Maybe just make the choice of symbols (x/o) automatic
+ * /////* Maybe just make the choice of symbols (x/o) automatic
  * ! Add an AI(or something like that) so you can play solo - you sad FUCK
- * //! REMOVE goto cause its Retarted
+ * //! REMOVE goto cause its stupid
+ * ! Rename the variables
  * * Try to make some kind GUI for this(don't know how atm)
  * * Write the functions in different files(just to learn it -- for this kind of short code it's pretty useless)
  * // MAKE IT A VECTOR YOU STUPID FUCK -- actually just leave it :)
@@ -23,14 +24,12 @@ int checkRewrite(int i, int memory[], int *k);
 char line[10];
 
 int main(){
-    char game[SIZE];
-    int i;
+    char game[SIZE]; // the x&o array
+    int i; // array position
     int test = 1; // keeps the while going till a win condition is met
-    char *pgame;
-    pgame = game;
+    char *pgame = game;
     int memory[SIZE]; //remember where x/o have been placed
-    int k = 0; // keep count of how may x/o have been placed
-    int j;
+    int turn = 0; // keep count of how may x/o have been placed and how many turns have passed
 
     fillUp(pgame);
     printTicToc(pgame);
@@ -38,15 +37,21 @@ int main(){
     printf("Instruction: Input the line number and right next to it the symbol you wish to play with(use x and o pls):\n");
 
     while(test == 1){
+        if(turn % 2 == 0){
+            printf("TURN: %d -- x\n", (turn + 1));
+        }else{
+            printf("TURN: %d -- 0\n", (turn + 1));
+        }
 
         i = getNum("Input line(1-9): ", 'd') - 1;
         while(i < 0 || i > 8){
             printf("WRONG INPUT, please use numbers from 1 to 9\n");
             i = getNum("Input line(1-9): ", 'd') - 1;
         }
+        /*Gets the position(1-9) -- turns it in a array position (0-8)
+        (if it isn't o-8 it will scan it again*/
 
-        i = checkRewrite(i, memory, &k);
-
+        i = checkRewrite(i, memory, &turn);
         while(i == -1){
             printf("THE BOX IS ALREADY FILLED\n");
             i = getNum("Input line(1-9): ", 'd') - 1;
@@ -54,27 +59,25 @@ int main(){
                 printf("WRONG INPUT, please use numbers from 1 to 9\n");
                 i = getNum("Input line(1-9): ", 'd') - 1;
             }
-            i = checkRewrite(i, memory, &k);
+            i = checkRewrite(i, memory, &turn);
         }
-        /*Gets the position(1-9) -- turns it in a array position (0-8)
-        (if it isn't 0-8 it will scan it again -- goto -- )
-        -- assigns it to the array position*/
-       
-        game[i] = getNum("Input symbol: ", 'c');
-        while(game[i] != 'x' && game[i] != 'o'){
-            printf("WRONG INPUT, please use x or o\n");
-            game[i] = getNum("Input symbol: ", 'c');
+        /*Checks if the position has already been used 
+        -- re-scans it and rechecks it to be between 1-9*/
+        if(turn % 2 == 0){
+            game[i] = 'o';
+        }else{
+            game[i] = 'x';
         }
-        /*Gets the symbol then checks it to be either x or o;
-        if not it will scan it again and than assign it
-        to 'i' position in the char*/
-
+        /*Even turns are 'o'; uneven turns are 'x'*/
+        
         test = checkWin(pgame);
-        if( k == 9 && test == 1){
+        if( turn == 9 && test == 1){
             printf("........TIE........\n");
             printTicToc(pgame);
             break;
-         }         
+        }
+        /*if all positions are filled than declare a TIE 
+        -- also check that the last "move" wasn't the winning one*/         
        
         printTicToc(pgame);
 
@@ -175,3 +178,6 @@ int checkRewrite(int i, int memory[], int *k){
     *k = *k + 1;
     return i;
 }
+        /*Checks if the position has already been used, 
+        if yes => returns -1, 
+        if not => saves the position in an array and returns it to main*/
