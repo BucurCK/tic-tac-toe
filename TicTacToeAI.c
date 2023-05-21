@@ -39,7 +39,7 @@ int main(){
     fillUp(pgame);
     printTicToc(pgame);
 
-    printf("Instruction: Input the line number and right next to it the symbol_AI you wish to play with(use X and O pls):\n");
+    printf("Instruction: Input position number\n");
 
     while(test == 1){
 
@@ -54,11 +54,9 @@ int main(){
             if(test != 1){
                 break;
             }
-            printf("###4 turn=%d\n",turn);
             turn++;
             continue;;
         }
-        printf("###5 turn=%d\n",turn);
 
         i = getNum("Input line(1-9): ", 'd') - 1;
         while(i < 0 || i > 8){
@@ -80,7 +78,6 @@ int main(){
         }
         /*Checks if the position has already been used 
         -- re-scans it and rechecks it to be between 1-9*/
-        //printf("### turn=%d\n",turn);
         
         game[i] = 'X'; // puts the symbol
         
