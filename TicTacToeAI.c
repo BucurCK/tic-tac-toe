@@ -8,7 +8,6 @@
  * ! Rename the variables
  * * Try to make some kind GUI for this(don't know how atm)
  * * Write the functions in different files(just to learn it -- for this kind of short code it's pretty useless)
- * // MAKE IT A VECTOR YOU STUPID FUCK :)
  */
 
 void printTicToc(char *game);
